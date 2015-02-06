@@ -1,6 +1,7 @@
 # docker-eclipse
 
-Scala IDE v4.0.0 in a Docker container
+Scala IDE v4.0.0 in a Docker container (based on
+[docker-eclipse](https://github.com/fgrehm/docker-eclipse)).
 
 ## Requirements
 
