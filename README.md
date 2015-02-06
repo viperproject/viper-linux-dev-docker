@@ -1,6 +1,6 @@
 # docker-eclipse
 
-Eclipse v4.4.1 in a Docker container
+Scala IDE v4.0.0 in a Docker container
 
 ## Requirements
 
@@ -17,8 +17,8 @@ within the container:
 
 ```sh
 # The image size is currently 1.131 GB, so go grab a coffee while Docker downloads it
-docker pull fgrehm/eclipse:v4.4.1
-L=$HOME/bin/eclipse && curl -sL https://github.com/fgrehm/docker-eclipse/raw/master/eclipse > $L && chmod +x $L
+docker pull vakaras/scala-ide:v4.0.0
+L=$HOME/bin/eclipse && curl -sL https://github.com/vakaras/docker-eclipse/raw/master/eclipse > $L && chmod +x $L
 cd /path/to/java/project
 eclipse
 ```
