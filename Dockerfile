@@ -10,6 +10,7 @@ RUN sed 's/main$/main universe/' -i /etc/apt/sources.list && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /tmp/*
+ENV JAVA_TOOL_OPTIONS -Dfile.encoding=UTF8
 
 # Install libgtk as a separate step so that we can share the layer above with
 # the netbeans image
