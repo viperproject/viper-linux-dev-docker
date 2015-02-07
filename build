@@ -1,2 +1,2 @@
 echo 'This will take a lot of time...'
-docker build -t vakaras/scala-ide:v4.0.0 .
+docker build -t vakaras/viper-build:0.0.1 .

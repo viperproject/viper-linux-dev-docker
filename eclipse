@@ -4,4 +4,4 @@ docker run -ti --rm \
            -e DISPLAY=$DISPLAY \
            -v /tmp/.X11-unix:/tmp/.X11-unix \
            -v `pwd`:/workspace \
-           vakaras/scala-ide:v4.0.0
+           vakaras/viper-build:0.0.1
