@@ -1,6 +1,7 @@
 # docker-eclipse
 
-Scala IDE v4.0.0 in a Docker container (based on
+[Viper](https://bitbucket.org/viperproject/) development environment in
+a Docker container (based on
 [docker-eclipse](https://github.com/fgrehm/docker-eclipse)).
 
 ## Requirements
@@ -10,21 +11,12 @@ Scala IDE v4.0.0 in a Docker container (based on
 
 ## Quickstart
 
-Assuming `$HOME/bin` is on your `PATH` and that you are able to run `docker`
-commands [without `sudo`](http://docs.docker.io/installation/ubuntulinux/#giving-non-root-access),
+Assuming that you are able to run `docker` commands
+[without `sudo`](http://docs.docker.io/installation/ubuntulinux/#giving-non-root-access),
 you can use the [provided `eclipse` script](eclipse) to start a disposable
-Eclipse Docker container with your project sources mounted at `/home/developer/workspace`
-within the container:
-
-```sh
-# The image size is currently 1.131 GB, so go grab a coffee while Docker downloads it
-docker pull vakaras/scala-ide:v4.0.0
-L=$HOME/bin/eclipse && curl -sL https://github.com/vakaras/docker-eclipse/raw/master/eclipse > $L && chmod +x $L
-cd /path/to/java/project
-eclipse
-```
-
-Once you close Eclipse the container will be removed and no traces of it will be
+Scala IDE Docker container with your project sources mounted at
+`/home/developer/workspace` within the container. Once you close Eclipse
+the container will be removed and no traces of it will be
 kept on your machine (apart from the Docker image of course).
 
 ## Making plugins persist between sessions
