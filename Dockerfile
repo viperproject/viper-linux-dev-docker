@@ -33,15 +33,16 @@ RUN wget https://dl.bintray.com/sbt/debian/sbt-0.13.7.deb -O /tmp/sbt.deb && \
     dpkg -i /tmp/sbt.deb && \
     rm -f /tmp/sbt.deb
 
-# Install Scala IDE
-RUN wget http://downloads.typesafe.com/scalaide-pack/4.0.0-vfinal-luna-211-20150119/scala-SDK-4.0.0-vfinal-2.11-linux.gtk.x86_64.tar.gz -O /tmp/eclipse.tar.gz -q && \
-    echo 'Installing Scala IDE' && \
-    tar -xf /tmp/eclipse.tar.gz -C /opt && \
-    rm /tmp/eclipse.tar.gz
+# Install IntelliJ IDEA
+RUN wget https://download.jetbrains.com/idea/ideaIC-14.0.3.tar.gz -O /tmp/idea.tar.gz && \
+    echo 'Installing IntelliJ IDEA' && \
+    mkdir -p /tmp/idea && \
+    tar -xzf /tmp/idea.tar.gz -C /opt && \
+    rm -rf /tmp/*
 
-ADD run /usr/local/bin/eclipse
+ADD run /usr/local/bin/idea
 
-RUN chmod +x /usr/local/bin/eclipse && \
+RUN chmod +x /usr/local/bin/idea && \
     mkdir -p /home/developer && \
     echo "developer:x:1000:1000:Developer,,,:/home/developer:/bin/bash" >> /etc/passwd && \
     echo "developer:x:1000:" >> /etc/group && \
@@ -53,4 +54,4 @@ RUN chmod +x /usr/local/bin/eclipse && \
 USER developer
 ENV HOME /home/developer
 WORKDIR /home/developer
-CMD /usr/local/bin/eclipse
+CMD /usr/local/bin/idea
