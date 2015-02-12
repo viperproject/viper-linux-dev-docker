@@ -6,7 +6,7 @@ RUN sed 's/main$/main universe/' -i /etc/apt/sources.list && \
     add-apt-repository ppa:webupd8team/java -y && \
     apt-get update && \
     echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections && \
-    apt-get install -y oracle-java7-installer libxext-dev libxrender-dev libxtst-dev && \
+    apt-get install -y oracle-java7-installer libxext-dev libxrender-dev libxtst-dev mercurial && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /tmp/*
