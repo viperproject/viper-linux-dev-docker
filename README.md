@@ -1,4 +1,4 @@
-# docker-eclipse
+# docker-viper
 
 [Viper](https://bitbucket.org/viperproject/) development environment in
 a Docker container (based on
@@ -13,29 +13,11 @@ a Docker container (based on
 
 Assuming that you are able to run `docker` commands
 [without `sudo`](http://docs.docker.io/installation/ubuntulinux/#giving-non-root-access),
-you can use the [provided `eclipse` script](eclipse) to start a disposable
-Scala IDE Docker container with your project sources mounted at
-`/home/developer/workspace` within the container. Once you close Eclipse
-the container will be removed and no traces of it will be
-kept on your machine (apart from the Docker image of course).
-
-## Making plugins persist between sessions
-
-Eclipse plugins are kept on `$HOME/.eclipse` inside the container, so if you
-want to keep them around after you close it, you'll need to share it with your
-host.
-
-For example:
-
-```sh
-mkdir -p .eclipse-docker
-docker run -ti --rm \
-           -e DISPLAY=$DISPLAY \
-           -v /tmp/.X11-unix:/tmp/.X11-unix \
-           -v `pwd`/.eclipse-docker:/home/developer \
-           -v `pwd`:/workspace \
-           fgrehm/eclipse:v4.4.1
-```
+you can use the [provided `idea` script](idea) to start a disposable
+IntelliJ IDE Docker container with your project sources mounted at
+`/home/developer/workspace` within the container. Once you close
+IntelliJ the container will be removed and no traces of it will be kept
+on your machine (apart from the Docker image of course).
 
 ## Help! I started the container but I don't see the Eclipse screen
 
