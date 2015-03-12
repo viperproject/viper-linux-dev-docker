@@ -1,6 +1,7 @@
 FROM ubuntu:14.04
 MAINTAINER Vytautas Astrauskas "vastrauskas@gmail.com"
 
+# Install Java.
 RUN sed 's/main$/main universe/' -i /etc/apt/sources.list && \
     apt-get update && apt-get install -y software-properties-common && \
     add-apt-repository ppa:webupd8team/java -y && \
@@ -10,23 +11,36 @@ RUN sed 's/main$/main universe/' -i /etc/apt/sources.list && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /tmp/*
-ENV JAVA_TOOL_OPTIONS -Dfile.encoding=UTF8
 
 # Install libgtk as a separate step so that we can share the layer above with
 # the netbeans image
 RUN apt-get update && apt-get install -y libgtk2.0-0 libcanberra-gtk-module
 
-# Install Z3
-RUN wget 'https://download-codeplex.sec.s-msft.com/Download/SourceControlFileDownload.ashx?ProjectName=z3&changeSetId=cee7dd39444c9060186df79c2a2c7f8845de415b' -O /tmp/z3.zip && \
-    echo 'Installing Z3' && \
-    apt-get install -y unzip python build-essential && \
-    unzip /tmp/z3.zip -d /tmp/z3 && \
-    cd /tmp/z3/ && \
+# Install Git
+RUN apt-get update && \
+    apt-get install -y git libcurl4-openssl-dev build-essential autoconf zlib1g-dev gettext && \
+    cd /tmp && \
+    git clone https://github.com/git/git.git && \
+    cd /tmp/git && \
+    make configure && \
+    ./configure --prefix=/usr && \
+    make all && \
+    make install && \
+    apt-get clean && \
+    rm -rf /tmp/*
+
+# Install Z3 (v4.3.2)
+RUN apt-get update && \
+    apt-get install -y build-essential unzip && \
+    cd /tmp && \
+    git clone https://git01.codeplex.com/z3 && \
+    cd /tmp/z3 && \
+    git checkout v4.3.2 && \
     python scripts/mk_make.py && \
     cd build && \
     make && \
     make install && \
-    rm -rf /tmp/z3.zip /tmp/z3
+    rm -rf /tmp/z3
 
 # Install SBT
 RUN wget https://dl.bintray.com/sbt/debian/sbt-0.13.7.deb -O /tmp/sbt.deb && \
@@ -38,7 +52,15 @@ RUN wget https://download.jetbrains.com/idea/ideaIC-14.0.3.tar.gz -O /tmp/idea.t
     echo 'Installing IntelliJ IDEA' && \
     mkdir -p /tmp/idea && \
     tar -xzf /tmp/idea.tar.gz -C /opt && \
+    cd /tmp && \
+    wget -c 'http://plugins.jetbrains.com/plugin/download?pr=idea_ce&updateId=18845' -O /tmp/scala.zip && \
+    unzip scala.zip && \
+    mkdir -p /home/developer/.IdeaIC14/config/plugins && \
+    mv /tmp/Scala /home/developer/.IdeaIC14/config/plugins && \
     rm -rf /tmp/*
+
+# Bug work arounds.
+ENV JAVA_TOOL_OPTIONS -Dfile.encoding=UTF8
 
 ADD run /usr/local/bin/idea
 

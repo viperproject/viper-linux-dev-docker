@@ -3,5 +3,5 @@
 docker run -ti --rm \
            -e DISPLAY=$DISPLAY \
            -v /tmp/.X11-unix:/tmp/.X11-unix \
-           -v `pwd`:/workspace \
-           vakaras/viper-build:0.0.2
+           -v `pwd`:/home/developer/workspace \
+           vakaras/viper-build:0.0.3
