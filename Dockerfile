@@ -9,10 +9,18 @@ RUN apt-get update && \
     apt-get clean
 
 # Install Z3 (v4.4.0)
-RUN wget --no-verbose https://launchpad.net/ubuntu/+archive/primary/+files/z3_4.4.0-1_amd64.deb -O /tmp/z3.deb && \
-    gdebi -n /tmp/z3.deb && \
+RUN apt-get update && \
+    apt-get install -y git build-essential && \
+    cd /tmp && \
+    git clone https://github.com/Z3Prover/z3.git && \
+    cd /tmp/z3 && \
+    git checkout z3-4.4.0 && \
+    python scripts/mk_make.py && \
+    cd build && \
+    make && \
+    make install && \
     apt-get clean && \
-    rm -rf /tmp/*
+    rm -rf /tmp/z3
 
 # Install Boogie
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF && \
