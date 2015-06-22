@@ -10,7 +10,7 @@ RUN apt-get update && \
 
 # Install Z3 (v4.4.0)
 RUN apt-get update && \
-    apt-get install -y git build-essential && \
+    apt-get install -y git build-essential python && \
     cd /tmp && \
     git clone https://github.com/Z3Prover/z3.git && \
     cd /tmp/z3 && \
