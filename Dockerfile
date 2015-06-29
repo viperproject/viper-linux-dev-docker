@@ -61,7 +61,7 @@ RUN wget --local-encoding=utf-8 --no-verbose 'https://dl.bintray.com/sbt/debian/
     rm -f /tmp/sbt.deb
 
 # Install IntelliJ IDEA
-RUN wget --no-verbose https://download.jetbrains.com/idea/ideaIC-14.1.3.tar.gz -O /tmp/idea.tar.gz && \
+RUN wget --no-verbose https://download.jetbrains.com/idea/ideaIC-14.1.4.tar.gz -O /tmp/idea.tar.gz && \
     echo 'Installing IntelliJ IDEA' && \
     mkdir -p /tmp/idea && \
     tar -xzf /tmp/idea.tar.gz -C /opt && \
@@ -73,11 +73,11 @@ ENV JAVA_TOOL_OPTIONS -Dfile.encoding=UTF8
 ADD run /usr/local/bin/idea
 
 RUN apt-get update && \
-    apt-get install -y sudo && \
+    apt-get install -y sudo fish && \
     apt-get clean && \
     chmod +x /usr/local/bin/idea && \
     mkdir -p /home/developer && \
-    echo "developer:x:1000:1000:Developer,,,:/home/developer:/bin/bash" >> /etc/passwd && \
+    echo "developer:x:1000:1000:Developer,,,:/home/developer:/usr/bin/fish" >> /etc/passwd && \
     echo "developer:x:1000:" >> /etc/group && \
     echo "developer ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/developer && \
     chmod 0440 /etc/sudoers.d/developer && \
