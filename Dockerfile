@@ -73,7 +73,7 @@ ENV JAVA_TOOL_OPTIONS -Dfile.encoding=UTF8
 ADD run /usr/local/bin/idea
 
 RUN apt-get update && \
-    apt-get install -y sudo fish && \
+    apt-get install -y sudo fish man-db && \
     apt-get clean && \
     chmod +x /usr/local/bin/idea && \
     mkdir -p /home/developer && \
