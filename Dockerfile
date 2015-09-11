@@ -48,8 +48,8 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3FA7E0328081BFF6A14
 RUN sed 's/main$/main universe/' -i /etc/apt/sources.list && \
     add-apt-repository ppa:webupd8team/java -y && \
     apt-get update && \
-    echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections && \
-    apt-get install -y oracle-java7-installer libxext-dev libxrender-dev libxtst-dev mercurial && \
+    echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections && \
+    apt-get install -y oracle-java8-installer libxext-dev libxrender-dev libxtst-dev mercurial && \
     apt-get install -y libgtk2.0-0 libcanberra-gtk-module && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
@@ -59,6 +59,11 @@ RUN sed 's/main$/main universe/' -i /etc/apt/sources.list && \
 RUN wget --local-encoding=utf-8 --no-verbose 'https://dl.bintray.com/sbt/debian/sbt-0.13.8.deb' -O /tmp/sbt.deb && \
     dpkg -i /tmp/sbt.deb && \
     rm -f /tmp/sbt.deb
+
+# Install Nailgun.
+RUN apt-get update && \
+    apt-get install -y nailgun && \
+    apt-get clean
 
 # Install IntelliJ IDEA
 RUN wget --no-verbose https://download.jetbrains.com/idea/ideaIC-14.1.4.tar.gz -O /tmp/idea.tar.gz && \
@@ -75,6 +80,7 @@ ADD run /usr/local/bin/idea
 RUN apt-get update && \
     apt-get install -y sudo fish man-db && \
     apt-get clean && \
+    locale-gen en_US.UTF-8 && \
     chmod +x /usr/local/bin/idea && \
     mkdir -p /home/developer && \
     echo "developer:x:1000:1000:Developer,,,:/home/developer:/usr/bin/fish" >> /etc/passwd && \
@@ -83,6 +89,10 @@ RUN apt-get update && \
     chmod 0440 /etc/sudoers.d/developer && \
     chown developer:developer -R /home/developer && \
     chown root:root /usr/bin/sudo && chmod 4755 /usr/bin/sudo
+
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
 
 USER developer
 ENV HOME /home/developer
