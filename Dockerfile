@@ -73,6 +73,7 @@ RUN wget --no-verbose https://download.jetbrains.com/idea/ideaIC-14.1.4.tar.gz -
     rm -rf /tmp/*
 
 # Bug work arounds.
+RUN locale-gen en_US.UTF-8
 ENV JAVA_TOOL_OPTIONS -Dfile.encoding=UTF8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
@@ -83,7 +84,6 @@ ADD run /usr/local/bin/idea
 RUN apt-get update && \
     apt-get install -y sudo fish man-db && \
     apt-get clean && \
-    locale-gen en_US.UTF-8 && \
     chmod +x /usr/local/bin/idea && \
     mkdir -p /home/developer && \
     echo "developer:x:1000:1000:Developer,,,:/home/developer:/usr/bin/fish" >> /etc/passwd && \
