@@ -74,6 +74,9 @@ RUN wget --no-verbose https://download.jetbrains.com/idea/ideaIC-14.1.4.tar.gz -
 
 # Bug work arounds.
 ENV JAVA_TOOL_OPTIONS -Dfile.encoding=UTF8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
 
 ADD run /usr/local/bin/idea
 
@@ -89,10 +92,6 @@ RUN apt-get update && \
     chmod 0440 /etc/sudoers.d/developer && \
     chown developer:developer -R /home/developer && \
     chown root:root /usr/bin/sudo && chmod 4755 /usr/bin/sudo
-
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US:en
-ENV LC_ALL en_US.UTF-8
 
 USER developer
 ENV HOME /home/developer
