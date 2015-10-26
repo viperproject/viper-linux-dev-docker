@@ -66,7 +66,7 @@ RUN apt-get update && \
     apt-get clean
 
 # Install IntelliJ IDEA
-RUN wget --no-verbose https://download.jetbrains.com/idea/ideaIC-14.1.4.tar.gz -O /tmp/idea.tar.gz && \
+RUN wget --no-verbose https://download.jetbrains.com/idea/ideaIC-14.1.5.tar.gz -O /tmp/idea.tar.gz && \
     echo 'Installing IntelliJ IDEA' && \
     mkdir -p /tmp/idea && \
     tar -xzf /tmp/idea.tar.gz -C /opt && \
