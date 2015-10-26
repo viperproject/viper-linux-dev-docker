@@ -96,4 +96,4 @@ RUN apt-get update && \
 USER developer
 ENV HOME /home/developer
 WORKDIR /home/developer
-CMD /usr/local/bin/idea
+CMD /usr/bin/fish
