@@ -1,11 +1,11 @@
-FROM ubuntu:15.04
+FROM ubuntu:15.10
 MAINTAINER Vytautas Astrauskas "vastrauskas@gmail.com"
 
 ENV DEBIAN_FRONTEND noninteractive
 
 # Install prerequisites.
 RUN apt-get update && \
-    apt-get install -y software-properties-common unzip wget gdebi-core && \
+    apt-get install -y software-properties-common unzip wget curl gdebi-core && \
     apt-get clean
 
 # Install Z3 (v4.4.0)
@@ -15,7 +15,7 @@ RUN apt-get update && \
     git clone https://github.com/Z3Prover/z3.git && \
     cd /tmp/z3 && \
     git checkout z3-4.4.0 && \
-    python scripts/mk_make.py && \
+    ./configure && \
     cd build && \
     make && \
     make install && \

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-IMAGE_VERSION=0.0.13
+IMAGE_VERSION=0.0.15
 IMAGE_NAME="vakaras/viper-build:${IMAGE_VERSION}"
 
 echo 'This will take a lot of time...'
