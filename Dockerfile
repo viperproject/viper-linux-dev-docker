@@ -1,5 +1,5 @@
-FROM ubuntu:15.10
-MAINTAINER Vytautas Astrauskas "vastrauskas@gmail.com"
+FROM ubuntu:16.04
+MAINTAINER Viper Team "viper@inf.ethz.ch"
 
 ENV DEBIAN_FRONTEND noninteractive
 
