@@ -65,8 +65,13 @@ RUN apt-get update && \
     apt-get install -y nailgun && \
     apt-get clean
 
+# Install sudo, shell, etc.
+RUN apt-get update && \
+    apt-get install -y sudo fish man-db && \
+    apt-get clean
+
 # Install IntelliJ IDEA
-RUN wget --no-verbose https://download.jetbrains.com/idea/ideaIC-14.1.5.tar.gz -O /tmp/idea.tar.gz && \
+RUN wget --no-verbose https://download.jetbrains.com/idea/ideaIC-2016.3.1.tar.gz -O /tmp/idea.tar.gz && \
     echo 'Installing IntelliJ IDEA' && \
     mkdir -p /tmp/idea && \
     tar -xzf /tmp/idea.tar.gz -C /opt && \
@@ -81,10 +86,7 @@ ENV LC_ALL en_US.UTF-8
 
 ADD run /usr/local/bin/idea
 
-RUN apt-get update && \
-    apt-get install -y sudo fish man-db && \
-    apt-get clean && \
-    chmod +x /usr/local/bin/idea && \
+RUN chmod +x /usr/local/bin/idea && \
     mkdir -p /home/developer && \
     echo "developer:x:1000:1000:Developer,,,:/home/developer:/usr/bin/fish" >> /etc/passwd && \
     echo "developer:x:1000:" >> /etc/group && \
