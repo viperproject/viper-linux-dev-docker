@@ -86,16 +86,16 @@ ENV LC_ALL en_US.UTF-8
 
 ADD run /usr/local/bin/idea
 
-RUN chmod +x /usr/local/bin/idea && \
-    mkdir -p /home/developer && \
-    echo "developer:x:1000:1000:Developer,,,:/home/developer:/usr/bin/fish" >> /etc/passwd && \
-    echo "developer:x:1000:" >> /etc/group && \
-    echo "developer ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/developer && \
-    chmod 0440 /etc/sudoers.d/developer && \
-    chown developer:developer -R /home/developer && \
-    chown root:root /usr/bin/sudo && chmod 4755 /usr/bin/sudo
+# Install SSH server.
+RUN apt-get update && \
+    apt-get install -y openssh-server && \
+    apt-get clean
+RUN mkdir /var/run/sshd
+EXPOSE 22
 
-USER developer
-ENV HOME /home/developer
-WORKDIR /home/developer
-CMD /usr/bin/fish
+ADD initialize /usr/local/bin/initialize
+
+RUN chmod +x /usr/local/bin/initialize && \
+    chmod +x /usr/local/bin/idea
+
+CMD /usr/local/bin/initialize
