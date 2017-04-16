@@ -48,7 +48,7 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3FA7E0328081BFF6A14
 # Install Java.
 RUN apt-get update && \
     apt-get install -y openjdk-8-jdk ca-certificates-java && \
-    sudo update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java && \
+    update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java && \
     apt-get clean && \
     rm -rf /tmp/*
 
