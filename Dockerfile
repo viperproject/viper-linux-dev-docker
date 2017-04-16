@@ -5,6 +5,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 # Install prerequisites.
 RUN apt-get update && \
+    apt-get dist-upgrade -y && \
     apt-get install -y software-properties-common unzip wget curl gdebi-core && \
     apt-get clean
 
@@ -45,14 +46,10 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3FA7E0328081BFF6A14
     rm -rf /tmp/*
 
 # Install Java.
-RUN sed 's/main$/main universe/' -i /etc/apt/sources.list && \
-    add-apt-repository ppa:webupd8team/java -y && \
-    apt-get update && \
-    echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections && \
-    apt-get install -y oracle-java8-installer libxext-dev libxrender-dev libxtst-dev mercurial && \
-    apt-get install -y libgtk2.0-0 libcanberra-gtk-module && \
+RUN apt-get update && \
+    apt-get install -y openjdk-8-jdk ca-certificates-java && \
+    sudo update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
     rm -rf /tmp/*
 
 # Install SBT
@@ -71,7 +68,7 @@ RUN apt-get update && \
     apt-get clean
 
 # Install IntelliJ IDEA
-RUN wget --no-verbose https://download.jetbrains.com/idea/ideaIC-2016.3.4.tar.gz -O /tmp/idea.tar.gz && \
+RUN wget --no-verbose https://download.jetbrains.com/idea/ideaIC-2017.1.1.tar.gz -O /tmp/idea.tar.gz && \
     echo 'Installing IntelliJ IDEA' && \
     mkdir -p /tmp/idea && \
     tar -xzf /tmp/idea.tar.gz -C /opt && \
