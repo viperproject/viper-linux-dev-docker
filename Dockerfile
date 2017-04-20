@@ -6,16 +6,16 @@ ENV DEBIAN_FRONTEND noninteractive
 # Install prerequisites.
 RUN apt-get update && \
     apt-get dist-upgrade -y && \
-    apt-get install -y software-properties-common unzip wget curl gdebi-core && \
+    apt-get install -y software-properties-common unzip wget curl gdebi-core locales && \
     apt-get clean
 
-# Install Z3 (v4.4.0)
+# Install Z3 (post v4.5.0)
 RUN apt-get update && \
     apt-get install -y git build-essential python && \
     cd /tmp && \
     git clone https://github.com/Z3Prover/z3.git && \
     cd /tmp/z3 && \
-    git checkout z3-4.4.0 && \
+    git checkout 0a0b17540f307e041a791145c2c94ab57a7b6907 && \
     ./configure && \
     cd build && \
     make && \
@@ -28,7 +28,7 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3FA7E0328081BFF6A14
     echo "deb http://download.mono-project.com/repo/debian wheezy main" | tee /etc/apt/sources.list.d/mono-xamarin.list && \
     apt-get update && \
     apt-get install -y mono-complete && \
-    wget 'https://github.com/boogie-org/boogie/archive/56916c9d12f608dc580f4da03ef3dcbe35f42ef8.zip' -O /tmp/boogie.zip && \
+    wget 'https://github.com/boogie-org/boogie/archive/f085c05a5c49c730ca28be74b79d080f05f0b72e.zip' -O /tmp/boogie.zip && \
     cd /tmp && \
     unzip boogie.zip && \
     cd boogie-* && \
@@ -53,9 +53,13 @@ RUN apt-get update && \
     rm -rf /tmp/*
 
 # Install SBT
-RUN wget --local-encoding=utf-8 --no-verbose 'https://dl.bintray.com/sbt/debian/sbt-0.13.8.deb' -O /tmp/sbt.deb && \
-    dpkg -i /tmp/sbt.deb && \
-    rm -f /tmp/sbt.deb
+RUN apt-get update && \
+    apt-get install apt-transport-https && \
+    echo "deb https://dl.bintray.com/sbt/debian /" >> /etc/apt/sources.list.d/sbt.list && \
+    apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823 && \
+    apt-get update && \
+    apt-get install sbt && \
+    apt-get clean
 
 # Install Nailgun.
 RUN apt-get update && \
