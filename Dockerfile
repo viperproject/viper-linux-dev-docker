@@ -9,7 +9,7 @@ RUN apt-get update && \
     apt-get install -y software-properties-common unzip wget curl gdebi-core locales && \
     apt-get clean
 
-# Install Z3 (post v4.5.0)
+# Install Z3 (post v4.5.0).
 RUN apt-get update && \
     apt-get install -y git build-essential python && \
     cd /tmp && \
@@ -23,17 +23,19 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /tmp/z3
 
-# Install Boogie
+# Install Mono.
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF && \
     echo "deb http://download.mono-project.com/repo/debian wheezy main" | tee /etc/apt/sources.list.d/mono-xamarin.list && \
     apt-get update && \
-    apt-get install -y mono-complete && \
-    wget 'https://github.com/boogie-org/boogie/archive/f085c05a5c49c730ca28be74b79d080f05f0b72e.zip' -O /tmp/boogie.zip && \
+    apt-get install -y mono-complete tzdata && \
+    apt-get clean
+
+# Install Boogie.
+RUN wget --no-verbose 'https://github.com/boogie-org/boogie/archive/f085c05a5c49c730ca28be74b79d080f05f0b72e.zip' -O /tmp/boogie.zip && \
     cd /tmp && \
-    unzip boogie.zip && \
+    unzip -q boogie.zip && \
     cd boogie-* && \
-    wget https://nuget.org/nuget.exe && \
-    mono ./nuget.exe restore Source/Boogie.sln && \
+    wget --no-verbose https://nuget.org/nuget.exe && \
     xbuild Source/Boogie.sln && \
     mkdir -p /usr/lib/boogie/ && \
     cp -r Binaries/* /usr/lib/boogie/ && \
@@ -52,7 +54,7 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /tmp/*
 
-# Install SBT
+# Install SBT.
 RUN apt-get update && \
     apt-get install apt-transport-https && \
     echo "deb https://dl.bintray.com/sbt/debian /" >> /etc/apt/sources.list.d/sbt.list && \
@@ -71,7 +73,7 @@ RUN apt-get update && \
     apt-get install -y sudo fish man-db && \
     apt-get clean
 
-# Install IntelliJ IDEA
+# Install IntelliJ IDEA.
 RUN wget --no-verbose https://download.jetbrains.com/idea/ideaIC-2017.1.1.tar.gz -O /tmp/idea.tar.gz && \
     echo 'Installing IntelliJ IDEA' && \
     mkdir -p /tmp/idea && \
