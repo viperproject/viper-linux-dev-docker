@@ -70,7 +70,7 @@ RUN apt-get update && \
 
 # Install sudo, shell, etc.
 RUN apt-get update && \
-    apt-get install -y sudo fish man-db && \
+    apt-get install -y sudo fish man-db mercurial && \
     apt-get clean
 
 # Install IntelliJ IDEA.
