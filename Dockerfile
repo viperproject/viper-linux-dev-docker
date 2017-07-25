@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND noninteractive
 # Install prerequisites.
 RUN apt-get update && \
     apt-get dist-upgrade -y && \
-    apt-get install -y software-properties-common unzip wget curl gdebi-core locales && \
+    apt-get install -y software-properties-common unzip wget curl gdebi-core locales python-dev python3-dev && \
     apt-get clean
 
 # Install Z3 (post v4.5.0).
@@ -15,7 +15,7 @@ RUN apt-get update && \
     cd /tmp && \
     git clone https://github.com/Z3Prover/z3.git && \
     cd /tmp/z3 && \
-    git checkout 0a0b17540f307e041a791145c2c94ab57a7b6907 && \
+    git checkout 3865c453827506fc5c9d6c6c7c3d66d17030f158 && \
     ./configure && \
     cd build && \
     make && \
@@ -68,13 +68,18 @@ RUN apt-get update && \
     apt-get install -y nailgun && \
     apt-get clean
 
+# Install Viper-Runner dependencies.
+RUN apt-get update && \
+    apt-get install -y python3-psutil && \
+    apt-get clean
+
 # Install sudo, shell, etc.
 RUN apt-get update && \
     apt-get install -y sudo fish man-db mercurial && \
     apt-get clean
 
 # Install IntelliJ IDEA.
-RUN wget --no-verbose https://download.jetbrains.com/idea/ideaIC-2017.1.1.tar.gz -O /tmp/idea.tar.gz && \
+RUN wget --no-verbose https://download.jetbrains.com/idea/ideaIC-2017.2.tar.gz -O /tmp/idea.tar.gz && \
     echo 'Installing IntelliJ IDEA' && \
     mkdir -p /tmp/idea && \
     tar -xzf /tmp/idea.tar.gz -C /opt && \
