@@ -97,7 +97,8 @@ ADD run /usr/local/bin/idea
 # Install SSH server.
 RUN apt-get update && \
     apt-get install -y openssh-server && \
-    apt-get clean
+    apt-get clean && \
+    echo 'AddressFamily inet' >> /etc/ssh/sshd_config
 RUN mkdir /var/run/sshd
 EXPOSE 22
 
