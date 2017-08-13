@@ -70,8 +70,10 @@ RUN apt-get update && \
 
 # Install Viper-Runner dependencies.
 RUN apt-get update && \
-    apt-get install -y python3-psutil && \
-    apt-get clean
+    apt-get install -y python3-psutil python3-pip && \
+    apt-get clean && \
+    pip3 install --upgrade pip && \
+    pip3 install pyhocon
 
 # Install sudo, shell, etc.
 RUN apt-get update && \
