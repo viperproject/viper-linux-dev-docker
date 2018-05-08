@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 MAINTAINER Viper Team "viper@inf.ethz.ch"
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -9,13 +9,13 @@ RUN apt-get update && \
     apt-get install -y software-properties-common unzip wget curl gdebi-core locales python-dev python3-dev && \
     apt-get clean
 
-# Install Z3 (post v4.5.0).
+# Install Z3 (post v4.6.0).
 RUN apt-get update && \
     apt-get install -y git build-essential python && \
     cd /tmp && \
     git clone https://github.com/Z3Prover/z3.git && \
     cd /tmp/z3 && \
-    git checkout 3865c453827506fc5c9d6c6c7c3d66d17030f158 && \
+    git checkout bc3719f43675284165d6e5f25c66b150975c8be7 && \
     ./configure && \
     cd build && \
     make && \
@@ -24,14 +24,12 @@ RUN apt-get update && \
     rm -rf /tmp/z3
 
 # Install Mono.
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF && \
-    echo "deb http://download.mono-project.com/repo/debian wheezy main" | tee /etc/apt/sources.list.d/mono-xamarin.list && \
-    apt-get update && \
+RUN apt-get update && \
     apt-get install -y mono-complete tzdata && \
     apt-get clean
 
 # Install Boogie.
-RUN wget --no-verbose 'https://github.com/boogie-org/boogie/archive/f085c05a5c49c730ca28be74b79d080f05f0b72e.zip' -O /tmp/boogie.zip && \
+RUN wget --no-verbose 'https://github.com/boogie-org/boogie/archive/7d093373aff9703637c688a3a9cd3ca364bacd54.zip' -O /tmp/boogie.zip && \
     cd /tmp && \
     unzip -q boogie.zip && \
     cd boogie-* && \
@@ -68,24 +66,10 @@ RUN apt-get update && \
     apt-get install -y nailgun && \
     apt-get clean
 
-# Install Viper-Runner dependencies.
-RUN apt-get update && \
-    apt-get install -y python3-psutil python3-pip && \
-    apt-get clean && \
-    pip3 install --upgrade pip && \
-    pip3 install pyhocon
-
 # Install sudo, shell, etc.
 RUN apt-get update && \
     apt-get install -y sudo fish man-db mercurial && \
     apt-get clean
-
-# Install IntelliJ IDEA.
-RUN wget --no-verbose https://download.jetbrains.com/idea/ideaIC-2017.3.4.tar.gz -O /tmp/idea.tar.gz && \
-    echo 'Installing IntelliJ IDEA' && \
-    mkdir -p /tmp/idea && \
-    tar -xzf /tmp/idea.tar.gz -C /opt && \
-    rm -rf /tmp/*
 
 # Bug work arounds.
 RUN locale-gen en_US.UTF-8
