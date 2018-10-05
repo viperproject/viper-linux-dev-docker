@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND noninteractive
 # Install prerequisites.
 RUN apt-get update && \
     apt-get dist-upgrade -y && \
-    apt-get install -y software-properties-common unzip wget curl gdebi-core locales python-dev python3-dev && \
+    apt-get install -y software-properties-common unzip zip wget curl gdebi-core locales python-dev python3-dev && \
     apt-get clean
 
 # Install Z3 (post v4.6.0).
