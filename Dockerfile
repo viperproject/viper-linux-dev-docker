@@ -9,13 +9,13 @@ RUN apt-get update && \
     apt-get install -y software-properties-common unzip zip wget curl gdebi-core locales python-dev python3-dev && \
     apt-get clean
 
-# Install Z3 (post v4.6.0).
+# Install Z3 (v4.8.4).
 RUN apt-get update && \
     apt-get install -y git build-essential python && \
     cd /tmp && \
     git clone https://github.com/Z3Prover/z3.git && \
     cd /tmp/z3 && \
-    git checkout bc3719f43675284165d6e5f25c66b150975c8be7 && \
+    git checkout d6df51951f4cdc95f0dfd3b1297d04a465d8f2ca && \
     ./configure && \
     cd build && \
     make && \

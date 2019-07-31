@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-IMAGE_VERSION=0.0.19
+IMAGE_VERSION=0.0.20
 IMAGE_NAME="vakaras/viper-build:${IMAGE_VERSION}"
 USER_ID=$(shell id -u)
 GROUP_ID=$(shell id -g)
